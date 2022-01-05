@@ -6,6 +6,9 @@ import firebase from 'firebase/app'
 import 'firebase/app'
 import "firebase/auth"
 
+let app
+
+
 const firebaseConfig = {
   apiKey: "AIzaSyAAnnx_1qPjYVu57aUwl_IlcR9Ozl_GAvw",
   authDomain: "practice-firebase-auth-e4a76.firebaseapp.com",
@@ -17,5 +20,9 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
-createApp(App).use(store).use(router).use(firebase).mount('#app')
+firebase.auth().onAuthStateChanged(() => {
+  if (!app) {
+    createApp(App).use(store).use(router).use(firebase).mount('#app')
+  }
+})
 

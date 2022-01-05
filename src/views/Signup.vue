@@ -34,7 +34,8 @@ export default {
     signUp() {
       firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
       .then(response => {
-        console.log("Create account: ", response.user.email)
+        alert("ようこそ" + response.user.email + "さん")
+        this.$router.push("/")
       }
       )
       .catch (error => {
