@@ -37,9 +37,10 @@ export default {
       firebase.auth().signInWithEmailAndPassword(this.email, this.password)
       .then(
         response => {
-          localStorage.setItem('jwt', response.user.qa)
-          console.log(localStorage)
-          alert('Success!')
+          response.user.getIdToken().then(idToken => {
+            localStorage.setItem('jwt',idToken.toString())
+          })
+          alert('ログインできました。!')
           this.$router.push('/')
         },
         err => {

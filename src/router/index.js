@@ -33,14 +33,17 @@ const router = createRouter({
   routes
 })
 
-// homeにアクセスするにはログインが必要になる
+// beforeガードはこれで一旦固定する。
 router.beforeEach((to, from, next) => {
-  let currentUser = firebase.auth().currentUser
-  let requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-  if (requiresAuth && !currentUser) {
-    next('signin')
-  } else if (!requiresAuth && currentUser){
-    next()
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+  if (requiresAuth) {
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        next()
+      } else {
+        next({ name: 'Signin' })
+      }
+    })
   } else {
     next()
   }
