@@ -28,7 +28,7 @@ export default {
         this.notAuthenticatedUser= true
         this.authenticatedUser = false;
       }
-    });
+    })
   }
  }
 
